@@ -54,15 +54,12 @@ function App() {
     <Container maxWidth="lg" style={{ textAlign: 'center' }}>
       <div className="main">
         <h1>Welcome to the Weather App!</h1>
-        <h4>
-          Please click the button for updated weather information on your
-          current location:
-        </h4>
+        <h4>Forecast in real time for your location.</h4>
       </div>
       {loading && (
         <>
           <h4>Please wait while we get the information</h4>
-          <CircularProgress />
+          <CircularProgress color="secondary" />
         </>
       )}
       {result.name && !loading && (

@@ -4,6 +4,8 @@
 
 .paper {
   padding: 40px;
+  background-color: transparent !important;
+  color: white !important;
 }
 
 .city > * {
