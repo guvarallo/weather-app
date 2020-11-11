@@ -5,7 +5,7 @@ const key = apiConfig.apiKey;
 
 const Weather = {
   getWeatherFromUserLocation(lat, lon) {
-    return fetch(`${url}${lat}&lon=${lon}&appid=${key}&units=metric`)
+    return fetch(`${url}lat=${lat}&lon=${lon}&appid=${key}&units=metric`)
       .then(res => res.json())
       .then(data => data);
   },

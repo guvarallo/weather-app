@@ -1,11 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
 import Weather from '../../utils/WeatherAPI';
 
 function App() {
   const [lat, setLat] = useState(0);
   const [lon, setLon] = useState(0);
+  const [error, setError] = useState('');
   const [result, setResult] = useState({});
 
   navigator.geolocation.getCurrentPosition(pos => {
@@ -14,18 +15,20 @@ function App() {
     setLon(Math.round(pos.coords.longitude * 100) / 100);
   });
 
-  useEffect(() => {
+  function handleClick() {
     Weather.getWeatherFromUserLocation(lat, lon)
-      .then(data => {
-        console.log(data);
-        setResult(data);
-      })
-      .catch(err => console.log(err));
-  }, []);
+      .then(data => setResult(data))
+      .catch(err => {
+        setError(
+          'Something went wrong, please try again or contact us for further investigation.',
+        );
+        console.log(err);
+      });
+  }
 
   return (
     <>
-      {console.log(result.name)}
+      <button onClick={handleClick}>Click</button>
       {result.name && (
         <>
           <h1>{result.name}</h1>
@@ -33,7 +36,8 @@ function App() {
           <p>{result.weather[0].description}</p>
         </>
       )}
-      {!result.name && <h1>Loading...</h1>}
+      {!result.name && !error && <h1>Loading...</h1>}
+      {error && <p>{error}</p>}
     </>
   );
 }
