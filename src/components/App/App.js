@@ -15,7 +15,7 @@ function App() {
   });
 
   useEffect(() => {
-    Weather.getCurrentLocation(lat, lon)
+    Weather.getWeatherFromUserLocation(lat, lon)
       .then(data => {
         console.log(data);
         setResult(data);
