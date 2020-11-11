@@ -1,5 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
@@ -16,16 +15,7 @@ function App() {
   const [error, setError] = useState('');
   const [result, setResult] = useState({});
 
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition(pos => {
-      // Get only 2 decimals for lat and lon, since the longer lon was giving error
-      setLat(Math.round(pos.coords.latitude * 100) / 100);
-      setLon(Math.round(pos.coords.longitude * 100) / 100);
-      handleWeatherFetch();
-    });
-  }, []);
-
-  function handleWeatherFetch() {
+  const handleWeatherFetch = useCallback(() => {
     const currentTime = new Date();
     setTime(`${currentTime.getHours()}:${currentTime.getMinutes()}`);
 
@@ -49,7 +39,16 @@ function App() {
         setLoading(false);
         console.log(err);
       });
-  }
+  }, [lat, lon]);
+
+  useEffect(() => {
+    navigator.geolocation.getCurrentPosition(pos => {
+      // Get only 2 decimals for lat and lon, since the longer lon was giving error
+      setLat(Math.round(pos.coords.latitude * 100) / 100);
+      setLon(Math.round(pos.coords.longitude * 100) / 100);
+      handleWeatherFetch();
+    });
+  }, [handleWeatherFetch]);
 
   return (
     <Container maxWidth="lg" style={{ textAlign: 'center' }}>
