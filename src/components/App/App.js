@@ -66,6 +66,12 @@ function App() {
             <h1>{result.name}</h1>
             <p>Local time: {time}</p>
           </div>
+          <div className="weather-icon">
+            <img
+              src={`http://openweathermap.org/img/w/${result.weather[0].icon}.png`}
+              alt="weather icon"
+            />
+          </div>
           <h3>{result.main.temp}</h3>
           <p>{result.weather[0].description}</p>
         </Paper>
