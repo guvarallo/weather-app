@@ -1,3 +1,18 @@
-#city > * {
+.main {
+  margin-bottom: 50px;
+}
+
+.paper {
+  padding: 40px;
+}
+
+.city > * {
   margin: 0;
+}
+
+.weather-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
 }
