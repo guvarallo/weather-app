@@ -8,21 +8,21 @@ import './App.css';
 import Weather from '../../utils/WeatherAPI';
 
 function App() {
-  const [lat, setLat] = useState(0);
-  const [lon, setLon] = useState(0);
+  // const [lat, setLat] = useState();
+  // const [lon, setLon] = useState();
   const [time, setTime] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [result, setResult] = useState({});
 
-  const handleWeatherFetch = useCallback(() => {
+  const handleWeatherFetch = useCallback(async () => {
     const currentTime = new Date();
     setTime(`${currentTime.getHours()}:${currentTime.getMinutes()}`);
 
     setLoading(true);
-    Weather.getWeatherFromUserLocation(lat, lon)
-      .then(data => {
-        console.log(data);
+
+    try {
+      Weather.getWeatherFromUserLocation().then(data => {
         setResult({
           temp: Math.round(data.main.temp),
           feels_like: Math.round(data.main.feels_like),
@@ -31,24 +31,19 @@ function App() {
           description: data.weather[0].description,
         });
         setLoading(false);
-      })
-      .catch(err => {
-        setError(
-          'Something went wrong, please try again or contact us for further investigation.',
-        );
-        setLoading(false);
-        console.log(err);
       });
-  }, [lat, lon]);
+    } catch (err) {
+      setError(
+        'Something went wrong, please try again or contact us for further investigation.',
+      );
+      setLoading(false);
+      console.log(err);
+    }
+  }, []);
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(pos => {
-      // Get only 2 decimals for lat and lon, since the longer lon was giving error
-      setLat(Math.round(pos.coords.latitude * 100) / 100);
-      setLon(Math.round(pos.coords.longitude * 100) / 100);
-      handleWeatherFetch();
-    });
-  }, [handleWeatherFetch]);
+    handleWeatherFetch();
+  }, []);
 
   return (
     <Container maxWidth="lg" style={{ textAlign: 'center' }}>
