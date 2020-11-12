@@ -13,15 +13,20 @@ function Weather() {
   const dispatch = useDispatch();
   const { isPending, weather, error } = useSelector(state => state);
 
-  function handleUpdateInfo() {
-    dispatch(fetchWeather());
-  }
-
-  useEffect(() => {
+  function getCurrentTime() {
     const currentTime = new Date();
     const hours = currentTime.getHours();
     const minutes = currentTime.getMinutes();
     setTime(`${hours}:${minutes < 10 ? `0${minutes}` : minutes}`);
+  }
+
+  function handleUpdateInfo() {
+    getCurrentTime();
+    dispatch(fetchWeather());
+  }
+
+  useEffect(() => {
+    getCurrentTime();
     dispatch(fetchWeather());
   }, [dispatch]);
 
