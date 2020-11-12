@@ -10,7 +10,15 @@ Forecast in real time for your location using OpenWeather API.
 
 ### Prerequisites
 
-You will need to generate your own API Key on OpenWeather at https://openweathermap.org/api
+1. Generate your own API Key on OpenWeather at https://openweathermap.org/api
+2. Create a folder under src/ named 'utils'
+3. Inside utils/, create a file named 'apiKey.js' and add the following:
+
+```
+module.exports = {
+  apiKey: 'YOUR_API_KEY_HERE',
+};
+```
 
 ## Built With
 
