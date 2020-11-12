@@ -1,4 +1,4 @@
-# Weater App
+# Weather App
 
 Forecast in real time for your location using OpenWeather API.
 
