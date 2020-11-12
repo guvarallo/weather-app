@@ -5,6 +5,8 @@ const key = apiConfig.apiKey;
 
 const Weather = {
   async getWeatherFromUserLocation() {
+    // Due to the async nature of geolocation, we fist need to resolve it as a
+    // Promise, and only then make the fetch with the correct lat and lon.
     let lat, lon;
     const getPosition = () => {
       return new Promise(function (resolve, reject) {
@@ -18,7 +20,7 @@ const Weather = {
       lon = Math.round(pos.coords.longitude * 100) / 100;
       return fetch(`${url}lat=${lat}&lon=${lon}&appid=${key}&units=metric`)
         .then(res => res.json())
-        .then(data => console.log(data));
+        .then(data => data);
     });
 
     return data;
