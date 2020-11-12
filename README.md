@@ -10,7 +10,7 @@ Forecast in real time for your location using OpenWeather API.
 
 ### Prerequisites
 
-You will need to generate your own API Key on Yelp at https://openweathermap.org/api
+You will need to generate your own API Key on OpenWeather at https://openweathermap.org/api
 
 ## Built With
 
