@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
-// import Alert from '@material-ui/lab/Alert';
+import Alert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import './Weather.css';
@@ -11,7 +11,7 @@ import { fetchWeather } from '../../actions';
 function Weather() {
   const [time, setTime] = useState('');
   const dispatch = useDispatch();
-  const { isPending, weather } = useSelector(state => state);
+  const { isPending, weather, error } = useSelector(state => state);
 
   function handleUpdateInfo() {
     dispatch(fetchWeather());
@@ -21,7 +21,7 @@ function Weather() {
     const currentTime = new Date();
     const hours = currentTime.getHours();
     const minutes = currentTime.getMinutes();
-    setTime(`${hours}:${minutes < 10 ? `0${hours}` : minutes}`);
+    setTime(`${hours}:${minutes < 10 ? `0${minutes}` : minutes}`);
     dispatch(fetchWeather());
   }, [dispatch]);
 
@@ -61,11 +61,13 @@ function Weather() {
           </div>
         </Paper>
       )}
-      {/* {error && (
+      {error && (
         <Alert severity="error" style={{ width: '70%', margin: 'auto' }}>
-          {error}
+          Something went wrong, please refresh the page or contact us for
+          further analysis.
+          {console.error(error)}
         </Alert>
-      )} */}
+      )}
     </>
   );
 }

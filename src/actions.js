@@ -19,12 +19,14 @@ export const fetchWeather = () => {
       lon = Math.round(pos.coords.longitude * 100) / 100;
       return fetch(`${url}lat=${lat}&lon=${lon}&appid=${key}&units=metric`)
         .then(res => res.json())
-        .then(data => data);
+        .then(data => data)
+        .catch(err => err);
     });
 
-    dispatch({
-      type: 'FETCH_WEATHER_SUCCESS',
-      payload: data,
-    });
+    if (data.message) {
+      dispatch({ type: 'FETCH_WEATHER_ERROR', payload: data.message });
+    }
+
+    dispatch({ type: 'FETCH_WEATHER_SUCCESS', payload: data });
   };
 };
