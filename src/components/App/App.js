@@ -2,27 +2,27 @@ import React, { useCallback, useEffect, useState } from 'react';
 import Container from '@material-ui/core/Container';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
+import Alert from '@material-ui/lab/Alert';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 import './App.css';
 import Weather from '../../utils/WeatherAPI';
 
 function App() {
-  // const [lat, setLat] = useState();
-  // const [lon, setLon] = useState();
   const [time, setTime] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [result, setResult] = useState({});
 
-  const handleWeatherFetch = useCallback(async () => {
+  const handleWeatherFetch = useCallback(() => {
+    setLoading(true);
+    setError('');
+
     const currentTime = new Date();
     setTime(`${currentTime.getHours()}:${currentTime.getMinutes()}`);
 
-    setLoading(true);
-
-    try {
-      Weather.getWeatherFromUserLocation().then(data => {
+    Weather.getWeatherFromUserLocation()
+      .then(data => {
         setResult({
           temp: Math.round(data.main.temp),
           feels_like: Math.round(data.main.feels_like),
@@ -31,14 +31,14 @@ function App() {
           description: data.weather[0].description,
         });
         setLoading(false);
+      })
+      .catch(err => {
+        setError(
+          'Something went wrong, please try again or contact us for further investigation.',
+        );
+        setLoading(false);
+        console.log(err);
       });
-    } catch (err) {
-      setError(
-        'Something went wrong, please try again or contact us for further investigation.',
-      );
-      setLoading(false);
-      console.log(err);
-    }
   }, []);
 
   useEffect(() => {
@@ -84,7 +84,11 @@ function App() {
           </div>
         </Paper>
       )}
-      {error && <p>{error}</p>}
+      {error && (
+        <Alert severity="error" style={{ width: '70%', margin: 'auto' }}>
+          {error}
+        </Alert>
+      )}
     </Container>
   );
 }

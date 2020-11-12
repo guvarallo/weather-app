@@ -18,7 +18,7 @@ const Weather = {
       lon = Math.round(pos.coords.longitude * 100) / 100;
       return fetch(`${url}lat=${lat}&lon=${lon}&appid=${key}&units=metric`)
         .then(res => res.json())
-        .then(data => data);
+        .then(data => console.log(data));
     });
 
     return data;
