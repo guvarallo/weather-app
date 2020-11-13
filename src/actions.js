@@ -1,11 +1,16 @@
 import apiConfig from './utils/apiKey';
 
+import {
+  FETCH_WEATHER_PENDING,
+  FETCH_WEATHER_SUCCESS,
+  FETCH_WEATHER_ERROR,
+} from './constants';
 const url = 'http://api.openweathermap.org/data/2.5/weather?';
 const key = apiConfig.apiKey;
 
 export const fetchWeather = () => {
   return async dispatch => {
-    dispatch({ type: 'FETCH_WEATHER_PENDING' });
+    dispatch({ type: FETCH_WEATHER_PENDING });
     let lat, lon;
     const getPosition = () => {
       return new Promise(function (resolve, reject) {
@@ -26,9 +31,9 @@ export const fetchWeather = () => {
       .catch(err => err);
 
     if (data.message) {
-      dispatch({ type: 'FETCH_WEATHER_ERROR', payload: data.message });
+      dispatch({ type: FETCH_WEATHER_ERROR, payload: data.message });
     }
 
-    dispatch({ type: 'FETCH_WEATHER_SUCCESS', payload: data });
+    dispatch({ type: FETCH_WEATHER_SUCCESS, payload: data });
   };
 };
