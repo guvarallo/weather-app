@@ -1,6 +1,14 @@
-# Weather App
+<h1 align="center">Weather App</h1>
 
-Forecast in real time for your location using OpenWeather API.
+<h3 align="center">Forecast in real time for your location using OpenWeather API.</h3>
+
+<div align="center">
+
+## Demo
+
+![Weather App Demo](src/assets/weather-app.gif)
+
+</div>
 
 ## Getting Started
 

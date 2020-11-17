@@ -5,6 +5,7 @@ import {
   FETCH_WEATHER_SUCCESS,
   FETCH_WEATHER_ERROR,
 } from './constants';
+
 const url = 'http://api.openweathermap.org/data/2.5/weather?';
 const key = apiConfig.apiKey;
 
